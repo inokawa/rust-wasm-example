@@ -1,1 +1,4 @@
-import("../pkg/index.js").catch(console.error);
+(async () => {
+  const wasm = await import("../pkg/index.js");
+  wasm.hello();
+})();
