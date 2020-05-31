@@ -19,6 +19,7 @@ lto = true
 [dependencies]
 wasm-bindgen = "0.2.45"
 wee_alloc = { version = "0.4.2", optional = true }
+mod_c = { path = "./mod_c" }
 
 [dependencies.web-sys]
 version = "0.3.22"
