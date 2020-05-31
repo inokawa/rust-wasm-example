@@ -1,6 +1,18 @@
 # rust-wasm-example
 
-## How to install
+An example of porting C to WebAssembly by Rust.
+
+## Setup
+
+requirements
+
+- rust
+  - cargo
+    - target `wasm32-unknown-unknown` is used to compile
+- node
+  - npm
+- clang
+  - needed to compile C
 
 ```sh
 npm install
