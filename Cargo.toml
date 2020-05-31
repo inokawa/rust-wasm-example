@@ -22,6 +22,7 @@ serde = { version = "1.0.114", features = ["derive"] }
 wasm-bindgen = { version = "0.2.65", features = ["serde-serialize"] }
 wee_alloc = { version = "0.4.5", optional = true }
 mod_c = { path = "./mod_c" }
+mod_cpp = { path = "./mod_cpp" }
 rs_audio = { path = "./rs_audio" }
 rs_image = { path = "./rs_image" }
 rs_text = { path = "./rs_text" }

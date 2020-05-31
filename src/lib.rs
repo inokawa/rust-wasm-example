@@ -5,6 +5,7 @@ use wasm_bindgen::JsCast;
 use web_sys::console;
 
 use mod_c;
+use mod_cpp;
 use rs_audio;
 use rs_image;
 use rs_text;
@@ -31,6 +32,11 @@ pub fn main_js() -> Result<(), JsValue> {
 #[wasm_bindgen]
 pub fn greet_c(n: u32) -> u32 {
     mod_c::hi(n)
+}
+
+#[wasm_bindgen]
+pub fn greet_cpp(n: u32) -> u32 {
+    mod_cpp::hello(n)
 }
 
 #[wasm_bindgen]

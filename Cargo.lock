@@ -390,6 +390,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "mod_cpp"
+version = "0.1.0"
+dependencies = [
+ "cc",
+]
+
+[[package]]
 name = "num-integer"
 version = "0.1.43"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -549,6 +556,7 @@ dependencies = [
  "futures",
  "js-sys",
  "mod_c",
+ "mod_cpp",
  "rs_audio",
  "rs_image",
  "rs_text",

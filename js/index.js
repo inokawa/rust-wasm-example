@@ -10,6 +10,13 @@ import * as dom from "./dom";
     })
   );
 
+  dom.addRow(
+    dom.createButton("Hello from C++", () => {
+      const num = wasm.greet_cpp(99);
+      alert(num);
+    })
+  );
+
   window.AudioContext = window.AudioContext || window.webkitAudioContext;
   const ctx = new AudioContext();
   const sampleRate = ctx.sampleRate;
