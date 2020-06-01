@@ -2,6 +2,10 @@
 
 An example of porting C to WebAssembly by Rust.
 
+## Demo
+
+https://n-inokawa.github.io/rust-wasm-example/
+
 ## Setup
 
 requirements
