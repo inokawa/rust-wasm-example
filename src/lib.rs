@@ -1,7 +1,7 @@
 use wasm_bindgen::prelude::*;
 use web_sys::console;
 
-extern crate mod_c;
+use mod_c;
 
 // When the `wee_alloc` feature is enabled, this uses `wee_alloc` as the global
 // allocator.
