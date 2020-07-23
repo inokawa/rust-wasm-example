@@ -22,6 +22,6 @@ pub fn main_js() -> Result<(), JsValue> {
 }
 
 #[wasm_bindgen]
-pub fn hi(n: u32) -> u32 {
+pub fn greet_c(n: u32) -> u32 {
     mod_c::hi(n)
 }
