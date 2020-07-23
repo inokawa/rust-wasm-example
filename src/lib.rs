@@ -2,6 +2,7 @@ use wasm_bindgen::prelude::*;
 use web_sys::console;
 
 use mod_c;
+use rs_image;
 
 // When the `wee_alloc` feature is enabled, this uses `wee_alloc` as the global
 // allocator.
@@ -24,4 +25,13 @@ pub fn main_js() -> Result<(), JsValue> {
 #[wasm_bindgen]
 pub fn greet_c(n: u32) -> u32 {
     mod_c::hi(n)
+}
+
+#[wasm_bindgen]
+pub fn invert(buffer: &[u8]) -> Result<Vec<u8>, JsValue> {
+    let res = rs_image::invert(buffer);
+    match res {
+        Ok(r) => Ok(r),
+        Err(e) => Err(JsValue::from(e.to_string())),
+    }
 }
