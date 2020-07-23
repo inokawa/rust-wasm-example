@@ -9,6 +9,7 @@ pub fn invert(buffer: &[u8]) -> Result<Vec<u8>, ImageError> {
     };
 
     img.invert();
+    let rgba = img.to_rgba();
 
-    Ok(img.to_bytes())
+    Ok(rgba.into_vec())
 }
