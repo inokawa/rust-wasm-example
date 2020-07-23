@@ -11,11 +11,6 @@ use mod_c;
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
-#[wasm_bindgen]
-extern "C" {
-    pub fn alert(s: &str);
-}
-
 #[wasm_bindgen(start)]
 pub fn main_js() -> Result<(), JsValue> {
     #[cfg(debug_assertions)]
@@ -29,9 +24,4 @@ pub fn main_js() -> Result<(), JsValue> {
 #[wasm_bindgen]
 pub fn hi(n: u32) -> u32 {
     mod_c::hi(n)
-}
-
-#[wasm_bindgen]
-pub fn hello() {
-    alert("Hi.");
 }

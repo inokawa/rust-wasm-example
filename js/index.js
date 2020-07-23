@@ -8,11 +8,4 @@
     alert(num);
   });
   document.body.appendChild(cButton);
-
-  const jsButton = document.createElement("button");
-  jsButton.appendChild(document.createTextNode("Call JS in wasm"));
-  jsButton.addEventListener("click", () => {
-    wasm.hello();
-  });
-  document.body.appendChild(jsButton);
 })();
