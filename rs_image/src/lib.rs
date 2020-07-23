@@ -2,8 +2,7 @@ use image;
 use image::error::*;
 
 pub fn invert(buffer: &[u8]) -> Result<Vec<u8>, ImageError> {
-    let data = image::load_from_memory(buffer);
-    let mut img = match data {
+    let mut img = match image::load_from_memory(buffer) {
         Ok(img) => img,
         Err(e) => return Err(e),
     };
