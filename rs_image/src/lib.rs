@@ -1,7 +1,14 @@
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
-    }
+use image;
+use image::error::*;
+
+pub fn invert(buffer: &[u8]) -> Result<Vec<u8>, ImageError> {
+    let data = image::load_from_memory(buffer);
+    let mut img = match data {
+        Ok(img) => img,
+        Err(e) => return Err(e),
+    };
+
+    img.invert();
+
+    Ok(img.to_bytes())
 }

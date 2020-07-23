@@ -20,6 +20,7 @@ lto = true
 wasm-bindgen = "0.2.45"
 wee_alloc = { version = "0.4.2", optional = true }
 mod_c = { path = "./mod_c" }
+rs_image = { path = "./rs_image" }
 
 [dependencies.web-sys]
 version = "0.3.22"
