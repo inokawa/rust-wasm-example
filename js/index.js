@@ -10,6 +10,24 @@ import * as dom from "./dom";
     })
   );
 
+  window.AudioContext = window.AudioContext || window.webkitAudioContext;
+  const ctx = new AudioContext();
+  const sampleRate = ctx.sampleRate;
+  dom.addRow(
+    dom.createButton("Synth audio", () => {
+      const sec = 1;
+      const resBuf = wasm.synth(440, sec, sampleRate);
+
+      const audioBuffer = ctx.createBuffer(2, sec * sampleRate, sampleRate);
+      audioBuffer.getChannelData(0).set(resBuf);
+      audioBuffer.getChannelData(1).set(resBuf);
+      const source = ctx.createBufferSource();
+      source.buffer = audioBuffer;
+      source.connect(ctx.destination);
+      source.start();
+    })
+  );
+
   dom.addRow(
     dom.createInput("Load image and modify", "file", (e) => {
       const files = e.target.files;
