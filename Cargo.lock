@@ -274,6 +274,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "rs_audio"
+version = "0.1.0"
+
+[[package]]
 name = "rs_image"
 version = "0.1.0"
 dependencies = [
@@ -288,6 +292,7 @@ dependencies = [
  "futures",
  "js-sys",
  "mod_c",
+ "rs_audio",
  "rs_image",
  "wasm-bindgen",
  "wasm-bindgen-futures",

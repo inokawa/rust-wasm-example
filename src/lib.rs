@@ -2,6 +2,7 @@ use wasm_bindgen::prelude::*;
 use web_sys::console;
 
 use mod_c;
+use rs_audio;
 use rs_image;
 
 // When the `wee_alloc` feature is enabled, this uses `wee_alloc` as the global
@@ -25,6 +26,11 @@ pub fn main_js() -> Result<(), JsValue> {
 #[wasm_bindgen]
 pub fn greet_c(n: u32) -> u32 {
     mod_c::hi(n)
+}
+
+#[wasm_bindgen]
+pub fn synth(freq: f32, sec: u32, sample_rate: u32) -> Vec<f32> {
+    rs_audio::synth(freq, sec, sample_rate)
 }
 
 #[wasm_bindgen]
