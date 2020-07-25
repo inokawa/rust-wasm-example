@@ -38,6 +38,6 @@ pub fn invert(buffer: &[u8]) -> Result<Vec<u8>, JsValue> {
     let res = rs_image::invert(buffer);
     match res {
         Ok(r) => Ok(r),
-        Err(e) => Err(JsValue::from(e.to_string())),
+        Err(e) => Err(e.to_string().into()),
     }
 }
