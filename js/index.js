@@ -37,23 +37,19 @@ import * as dom from "./dom";
       const fileReader = new FileReader();
       fileReader.onload = () => {
         const buffer = new Uint8Array(fileReader.result);
-        const resBuf = wasm.invert(buffer);
+        const res = wasm.invert(buffer);
 
-        const image = new Image();
-        image.onload = () => {
-          const w = image.naturalWidth;
-          const h = image.naturalHeight;
-          const canvas = document.createElement("canvas");
-          canvas.setAttribute("width", w);
-          canvas.setAttribute("height", h);
-          dom.addRow(canvas);
+        const w = res.width;
+        const h = res.height;
+        const canvas = document.createElement("canvas");
+        canvas.setAttribute("width", w);
+        canvas.setAttribute("height", h);
+        dom.addRow(canvas);
 
-          const ctx = canvas.getContext("2d");
-          const imageData = ctx.createImageData(w, h);
-          imageData.data.set(resBuf);
-          ctx.putImageData(imageData, 0, 0);
-        };
-        image.src = URL.createObjectURL(file);
+        const ctx = canvas.getContext("2d");
+        const imageData = ctx.createImageData(w, h);
+        imageData.data.set(res.pixels);
+        ctx.putImageData(imageData, 0, 0);
       };
       fileReader.readAsArrayBuffer(file);
     })
