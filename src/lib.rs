@@ -1,3 +1,4 @@
+use serde::{Deserialize, Serialize};
 use wasm_bindgen::prelude::*;
 use web_sys::console;
 
@@ -33,10 +34,25 @@ pub fn synth(freq: f32, sec: u32, sample_rate: u32) -> Vec<f32> {
     rs_audio::synth(freq, sec, sample_rate)
 }
 
+#[derive(Serialize, Deserialize)]
+pub struct JsImage {
+    pub pixels: Vec<u8>,
+    pub width: u32,
+    pub height: u32,
+}
+
 #[wasm_bindgen]
-pub fn invert(buffer: &[u8]) -> Result<Vec<u8>, JsValue> {
+pub fn invert(buffer: &[u8]) -> Result<JsValue, JsValue> {
     let res = rs_image::invert(buffer);
-    match res {
+    let s_res = match res {
+        Ok(r) => JsValue::from_serde(&JsImage {
+            pixels: r.pixels,
+            width: r.width,
+            height: r.height,
+        }),
+        Err(e) => return Err(e.to_string().into()),
+    };
+    match s_res {
         Ok(r) => Ok(r),
         Err(e) => Err(e.to_string().into()),
     }
