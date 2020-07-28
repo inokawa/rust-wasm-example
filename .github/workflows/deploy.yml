@@ -32,6 +32,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
+      - run: cargo check
+
       - run: npm install
       - run: npm run build
 
