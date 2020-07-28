@@ -16,6 +16,10 @@ Audio synthesis with wasm.
 
 Image processing with wasm.
 
+#### rs_zip
+
+File compression with wasm.
+
 ## Demo
 
 https://n-inokawa.github.io/rust-wasm-example/

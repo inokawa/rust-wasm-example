@@ -5,6 +5,7 @@ use web_sys::console;
 use mod_c;
 use rs_audio;
 use rs_image;
+use rs_zip;
 
 // When the `wee_alloc` feature is enabled, this uses `wee_alloc` as the global
 // allocator.
@@ -55,5 +56,14 @@ pub fn invert(buffer: &[u8]) -> Result<JsValue, JsValue> {
     match s_res {
         Ok(r) => Ok(r),
         Err(e) => Err(e.to_string().into()),
+    }
+}
+
+#[wasm_bindgen]
+pub fn archive(buffer: &[u8]) -> Result<Vec<u8>, JsValue> {
+    let res = rs_zip::gzip(buffer);
+    match res {
+        Ok(r) => Ok(r),
+        Err(e) => Err(JsValue::from(e.to_string())),
     }
 }

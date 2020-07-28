@@ -54,4 +54,26 @@ import * as dom from "./dom";
       fileReader.readAsArrayBuffer(file);
     })
   );
+
+  dom.addRow(
+    dom.createInput("Archive file", "file", (e) => {
+      const files = e.target.files;
+      if (!files) return;
+      const file = files[0];
+
+      const fileReader = new FileReader();
+      fileReader.onload = () => {
+        const buffer = new Uint8Array(fileReader.result);
+        const resBuf = wasm.archive(buffer);
+        const blob = new File([resBuf], `${file.name}.gz`, {
+          type: "application/gzip",
+        });
+        const link = document.createElement("a");
+        link.setAttribute("href", URL.createObjectURL(blob));
+        link.setAttribute("download", blob.name);
+        link.click();
+      };
+      fileReader.readAsArrayBuffer(file);
+    })
+  );
 })();
