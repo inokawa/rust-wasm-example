@@ -23,6 +23,7 @@ wee_alloc = { version = "0.4.5", optional = true }
 mod_c = { path = "./mod_c" }
 rs_audio = { path = "./rs_audio" }
 rs_image = { path = "./rs_image" }
+rs_zip = { path = "./rs_zip" }
 
 [dependencies.web-sys]
 version = "0.3.42"
