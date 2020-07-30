@@ -37,7 +37,7 @@ import * as dom from "./dom";
       const fileReader = new FileReader();
       fileReader.onload = () => {
         const buffer = new Uint8Array(fileReader.result);
-        const res = wasm.invert(buffer);
+        const res = wasm.process(buffer);
 
         const w = res.width;
         const h = res.height;

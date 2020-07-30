@@ -7,7 +7,7 @@ pub struct Image {
     pub height: u32,
 }
 
-pub fn invert(buffer: &[u8]) -> Result<Image, ImageError> {
+pub fn process(buffer: &[u8]) -> Result<Image, ImageError> {
     let mut img = match image::load_from_memory(buffer) {
         Ok(img) => img,
         Err(e) => return Err(e),
@@ -15,11 +15,10 @@ pub fn invert(buffer: &[u8]) -> Result<Image, ImageError> {
 
     img.invert();
 
-    let rgba = img.to_rgba();
-    let width = rgba.width();
-    let height = rgba.height();
+    let mut img = img.to_rgba();
+    let (width, height) = img.dimensions();
     Ok(Image {
-        pixels: rgba.into_vec(),
+        pixels: img.into_vec(),
         width,
         height,
     })

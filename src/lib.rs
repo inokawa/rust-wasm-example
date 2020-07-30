@@ -46,8 +46,8 @@ pub struct JsImage {
 }
 
 #[wasm_bindgen]
-pub fn invert(buffer: &[u8]) -> Result<JsValue, JsValue> {
-    let res = rs_image::invert(buffer);
+pub fn process(buffer: &[u8]) -> Result<JsValue, JsValue> {
+    let res = rs_image::process(buffer);
     let s_res = match res {
         Ok(r) => JsValue::from_serde(&JsImage {
             pixels: r.pixels,
