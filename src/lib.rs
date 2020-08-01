@@ -1,6 +1,7 @@
 use js_sys::Array;
 use serde::{Deserialize, Serialize};
 use wasm_bindgen::prelude::*;
+use wasm_bindgen::JsCast;
 use web_sys::console;
 
 use mod_c;
@@ -62,8 +63,18 @@ pub fn invert(buffer: &[u8]) -> Result<JsValue, JsValue> {
 }
 
 #[wasm_bindgen]
-pub fn tokenize(text: String) -> Array {
-    rs_text::tokenize(text).iter().map(JsValue::from).collect()
+extern "C" {
+    #[wasm_bindgen(typescript_type = "Array<string>")]
+    pub type StringArray;
+}
+
+#[wasm_bindgen]
+pub fn tokenize(text: String) -> StringArray {
+    rs_text::tokenize(text)
+        .iter()
+        .map(JsValue::from)
+        .collect::<Array>()
+        .unchecked_into::<StringArray>()
 }
 
 #[wasm_bindgen]
