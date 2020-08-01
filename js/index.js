@@ -29,7 +29,7 @@ import * as dom from "./dom";
   );
 
   dom.addRow(
-    dom.createInput("Load image and modify", "file", (e) => {
+    dom.createInput("Load image and modify", "file", "change", (e) => {
       const files = e.target.files;
       if (!files) return;
       const file = files[0];
@@ -56,7 +56,7 @@ import * as dom from "./dom";
   );
 
   dom.addRow(
-    dom.createInput("Archive file", "file", (e) => {
+    dom.createInput("Archive file", "file", "change", (e) => {
       const files = e.target.files;
       if (!files) return;
       const file = files[0];
