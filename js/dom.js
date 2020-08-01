@@ -13,12 +13,12 @@ export const createButton = (labelText, onClick) => {
   return button;
 };
 
-export const createInput = (labelText, type, onChange) => {
+export const createInput = (labelText, type, eventName, onEvent) => {
   const label = document.createElement("label");
   label.appendChild(document.createTextNode(labelText));
   const input = document.createElement("input");
   input.setAttribute("type", type);
-  input.addEventListener("change", onChange);
+  input.addEventListener(eventName, onEvent);
   label.appendChild(input);
   return label;
 };

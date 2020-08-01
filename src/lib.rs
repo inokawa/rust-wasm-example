@@ -1,3 +1,4 @@
+use js_sys::Array;
 use serde::{Deserialize, Serialize};
 use wasm_bindgen::prelude::*;
 use web_sys::console;
@@ -5,6 +6,7 @@ use web_sys::console;
 use mod_c;
 use rs_audio;
 use rs_image;
+use rs_text;
 use rs_zip;
 
 // When the `wee_alloc` feature is enabled, this uses `wee_alloc` as the global
@@ -57,6 +59,11 @@ pub fn invert(buffer: &[u8]) -> Result<JsValue, JsValue> {
         Ok(r) => Ok(r),
         Err(e) => Err(e.to_string().into()),
     }
+}
+
+#[wasm_bindgen]
+pub fn tokenize(text: String) -> Array {
+    rs_text::tokenize(text).iter().map(JsValue::from).collect()
 }
 
 #[wasm_bindgen]
