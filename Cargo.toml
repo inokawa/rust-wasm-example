@@ -17,6 +17,7 @@ lto = true
 #default = ["wee_alloc"]
 
 [dependencies]
+js-sys = "0.3.42"
 serde = { version = "1.0.114", features = ["derive"] }
 wasm-bindgen = { version = "0.2.65", features = ["serde-serialize"] }
 wee_alloc = { version = "0.4.5", optional = true }
@@ -36,5 +37,4 @@ console_error_panic_hook = "0.1.6"
 [dev-dependencies]
 wasm-bindgen-test = "0.3.15"
 futures = "0.3.5"
-js-sys = "0.3.42"
 wasm-bindgen-futures = "0.4.15"

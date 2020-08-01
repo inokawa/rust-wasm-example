@@ -1,3 +1,4 @@
+use js_sys::Array;
 use serde::{Deserialize, Serialize};
 use wasm_bindgen::prelude::*;
 use web_sys::console;
@@ -61,8 +62,8 @@ pub fn invert(buffer: &[u8]) -> Result<JsValue, JsValue> {
 }
 
 #[wasm_bindgen]
-pub fn tokenize(text: String) -> String {
-    rs_text::tokenize(text)
+pub fn tokenize(text: String) -> Array {
+    rs_text::tokenize(text).iter().map(JsValue::from).collect()
 }
 
 #[wasm_bindgen]
