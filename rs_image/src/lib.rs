@@ -8,10 +8,7 @@ pub struct Image {
 }
 
 pub fn process(buffer: &[u8]) -> Result<Image, ImageError> {
-    let mut img = match image::load_from_memory(buffer) {
-        Ok(img) => img,
-        Err(e) => return Err(e),
-    };
+    let mut img = image::load_from_memory(buffer)?;
 
     img.invert();
 
