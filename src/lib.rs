@@ -79,9 +79,5 @@ pub fn tokenize(text: String) -> StringArray {
 
 #[wasm_bindgen]
 pub fn archive(buffer: &[u8]) -> Result<Vec<u8>, JsValue> {
-    let res = rs_zip::gzip(buffer);
-    match res {
-        Ok(r) => Ok(r),
-        Err(e) => Err(JsValue::from(e.to_string())),
-    }
+    rs_zip::gzip(buffer).or_else(|e| Err(e.to_string().into()))
 }
