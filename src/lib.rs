@@ -47,19 +47,13 @@ pub struct JsImage {
 
 #[wasm_bindgen]
 pub fn process(buffer: &[u8]) -> Result<JsValue, JsValue> {
-    let res = rs_image::process(buffer);
-    let s_res = match res {
-        Ok(r) => JsValue::from_serde(&JsImage {
-            pixels: r.pixels,
-            width: r.width,
-            height: r.height,
-        }),
-        Err(e) => return Err(e.to_string().into()),
-    };
-    match s_res {
-        Ok(r) => Ok(r),
-        Err(e) => Err(e.to_string().into()),
-    }
+    let res = rs_image::process(buffer).or_else(|e| Err(e.to_string()))?;
+    JsValue::from_serde(&JsImage {
+        pixels: res.pixels,
+        width: res.width,
+        height: res.height,
+    })
+    .or_else(|e| Err(e.to_string().into()))
 }
 
 #[wasm_bindgen]
