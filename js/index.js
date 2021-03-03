@@ -1,11 +1,14 @@
+import * as Comlink from "comlink";
 import * as dom from "./dom";
 
-(async () => {
-  const wasm = await import("../pkg/index.js");
+const worker = Comlink.wrap(
+  new Worker("./wasm-worker.js", { name: "wasm", type: "module" })
+);
 
+(async () => {
   dom.addRow(
-    dom.createButton("Hello from C", () => {
-      const num = wasm.greet_c(99);
+    dom.createButton("Hello from C", async () => {
+      const num = await worker.greet_c(99);
       alert(num);
     })
   );
@@ -15,9 +18,9 @@ import * as dom from "./dom";
   const sampleRate = ctx.sampleRate;
   let source;
   dom.addRow(
-    dom.createButton("Audio start", () => {
+    dom.createButton("Audio start", async () => {
       const sec = 1;
-      const resBuf = wasm.synth(440, sec, sampleRate);
+      const resBuf = await worker.synth(440, sec, sampleRate);
 
       const audioBuffer = ctx.createBuffer(2, sec * sampleRate, sampleRate);
       audioBuffer.getChannelData(0).set(resBuf);
@@ -41,9 +44,9 @@ import * as dom from "./dom";
       const file = files[0];
 
       const fileReader = new FileReader();
-      fileReader.onload = () => {
+      fileReader.onload = async () => {
         const buffer = new Uint8Array(fileReader.result);
-        const res = wasm.process(buffer);
+        const res = await worker.process(buffer);
 
         const w = res.width;
         const h = res.height;
@@ -63,8 +66,8 @@ import * as dom from "./dom";
 
   const textResult = document.createElement("span");
   dom.addRow(
-    dom.createInput("Tokenize Japanese", "text", "input", (e) => {
-      const res = wasm.tokenize(e.target.value);
+    dom.createInput("Tokenize Japanese", "text", "input", async (e) => {
+      const res = await worker.tokenize(e.target.value);
       textResult.innerHTML = res;
     }),
     textResult
@@ -77,9 +80,9 @@ import * as dom from "./dom";
       const file = files[0];
 
       const fileReader = new FileReader();
-      fileReader.onload = () => {
+      fileReader.onload = async () => {
         const buffer = new Uint8Array(fileReader.result);
-        const resBuf = wasm.archive(buffer);
+        const resBuf = await worker.archive(buffer);
         const blob = new File([resBuf], `${file.name}.gz`, {
           type: "application/gzip",
         });
@@ -91,4 +94,6 @@ import * as dom from "./dom";
       fileReader.readAsArrayBuffer(file);
     })
   );
+
+  await worker.init();
 })();
