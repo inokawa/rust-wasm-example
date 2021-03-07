@@ -1,14 +1,11 @@
-import * as Comlink from "comlink";
 import * as dom from "./dom";
 
-const worker = Comlink.wrap(
-  new Worker("./wasm-worker.js", { name: "wasm", type: "module" })
-);
-
 (async () => {
+  const wasm = await import("../pkg/index.js");
+
   dom.addRow(
-    dom.createButton("Hello from C", async () => {
-      const num = await worker.greet_c(99);
+    dom.createButton("Hello from C", () => {
+      const num = wasm.greet_c(99);
       alert(num);
     })
   );
@@ -18,9 +15,9 @@ const worker = Comlink.wrap(
   const sampleRate = ctx.sampleRate;
   let source;
   dom.addRow(
-    dom.createButton("Audio start", async () => {
+    dom.createButton("Audio start", () => {
       const sec = 1;
-      const resBuf = await worker.synth(440, sec, sampleRate);
+      const resBuf = wasm.synth(440, sec, sampleRate);
 
       const audioBuffer = ctx.createBuffer(2, sec * sampleRate, sampleRate);
       audioBuffer.getChannelData(0).set(resBuf);
@@ -44,9 +41,9 @@ const worker = Comlink.wrap(
       const file = files[0];
 
       const fileReader = new FileReader();
-      fileReader.onload = async () => {
+      fileReader.onload = () => {
         const buffer = new Uint8Array(fileReader.result);
-        const res = await worker.process(buffer);
+        const res = wasm.process(buffer);
 
         const w = res.width;
         const h = res.height;
@@ -66,8 +63,8 @@ const worker = Comlink.wrap(
 
   const textResult = document.createElement("span");
   dom.addRow(
-    dom.createInput("Tokenize Japanese", "text", "input", async (e) => {
-      const res = await worker.tokenize(e.target.value);
+    dom.createInput("Tokenize Japanese", "text", "input", (e) => {
+      const res = wasm.tokenize(e.target.value);
       textResult.innerHTML = res;
     }),
     textResult
@@ -80,9 +77,9 @@ const worker = Comlink.wrap(
       const file = files[0];
 
       const fileReader = new FileReader();
-      fileReader.onload = async () => {
+      fileReader.onload = () => {
         const buffer = new Uint8Array(fileReader.result);
-        const resBuf = await worker.archive(buffer);
+        const resBuf = wasm.archive(buffer);
         const blob = new File([resBuf], `${file.name}.gz`, {
           type: "application/gzip",
         });
@@ -94,6 +91,4 @@ const worker = Comlink.wrap(
       fileReader.readAsArrayBuffer(file);
     })
   );
-
-  await worker.init();
 })();
